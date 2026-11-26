@@ -9,9 +9,13 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const LINE =
-  "You pressed the button fourteen times. I heard you the first time — I just wanted to watch you sweat.";
+  "You pressed the button fourteen times. Relax — I'm an elevator, not a vending machine.";
 
 const MAX_CHARS = 120;
+
+// The line has to sound like it comes from the elevator's own job:
+// doors, buttons, floors — anything else is out of character.
+const ELEVATOR_JOB = /button|door|floor|lift/i;
 
 function lengthInChars(text: string): number {
   return [...text].length;
@@ -25,7 +29,7 @@ function checkLine(line: string): void {
   if (line.trim() === "") {
     throw new Error("line must not be only whitespace");
   }
-  if (!/button/i.test(line)) {
+  if (!ELEVATOR_JOB.test(line)) {
     throw new Error("line must come from the elevator's own job");
   }
 }
